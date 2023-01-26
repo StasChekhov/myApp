@@ -1,20 +1,24 @@
 import {
-  // StyleSheet,
   TextInput,
   View,
   ImageBackground,
   Text,
-  // Button,
   TouchableOpacity,
   Platform,
   KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import styles from "./styles";
 import image from "./src/background.png";
+import { useState } from "react";
 
 export default function App() {
-  console.log(Platform.OS);
-  // console.log("Stas", Platform.isPad);
+  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  console.log(isShowKeyboard);
+  const keyboardHide = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+  };
 
   return (
     <View style={styles.container}>
@@ -22,19 +26,42 @@ export default function App() {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={styles.form}>
-            <View>
-              <Text style={styles.inpuTitle}>Email Address</Text>
-              <TextInput style={styles.input} />
+          <View
+            style={{
+              ...styles.mainBackground,
+              height: isShowKeyboard ? 320 : 400,
+            }}
+          >
+            <View
+              style={{
+                ...styles.form,
+              }}
+            >
+              <View style={styles.header}>
+                <Text style={styles.headerTitle}> Sign In</Text>
+              </View>
+              <View>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  onFocus={() => setIsShowKeyboard(true)}
+                />
+              </View>
+              <View style={{ marginTop: 16 }}>
+                <TextInput
+                  style={styles.input}
+                  secureTextEntry={true}
+                  placeholder="Password"
+                />
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.btn}
+                onPress={keyboardHide}
+              >
+                <Text style={styles.btnTitle}> Sign in</Text>
+              </TouchableOpacity>
             </View>
-            <View style={{ marginTop: 15 }}>
-              <Text style={styles.inpuTitle}>Password</Text>
-              <TextInput style={styles.input} secureTextEntry={true} />
-            </View>
-            <TouchableOpacity activeOpacity={0.7} style={styles.btn}>
-              <Text style={styles.btnTitle}> Sign in</Text>
-            </TouchableOpacity>
-            {/* <Button title="Sign in" color={"#ffffff"} />  */}
           </View>
         </KeyboardAvoidingView>
       </ImageBackground>

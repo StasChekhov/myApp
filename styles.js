@@ -8,42 +8,33 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    // resizeMode: "cover",
     justifyContent: "flex-end",
     width: "100%",
-    // justifyContent: "center",
   },
   input: {
-    height: 30,
+    height: 50,
+    paddingLeft: 10,
     borderWidth: 1,
-    borderColor: "#f0f8ff",
-    color: "#ffffff",
+    borderColor: "mediumseagreen",
+    color: "black",
     fontSize: 17,
-    borderRadius: 7,
-    textAlign: "center",
-  },
-  inpuTitle: {
-    color: "#ffffff",
-    marginBottom: 7,
+    borderRadius: 8,
+    textAlign: "left",
+    backgroundColor: "#f6f6f6",
   },
   form: {
-    marginHorizontal: 40,
-    ...Platform.select({
-      ios: {
-        marginBottom: 40,
-      },
-    }),
+    width: 340,
   },
   btn: {
-    height: 40,
-    borderRadius: 6,
+    height: 50,
+    width: 340,
+    borderRadius: 100,
     marginTop: 30,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 20,
     ...Platform.select({
       ios: {
-        backgroundColor: "#ffffff",
+        backgroundColor: "mediumseagreen",
       },
       android: {
         backgroundColor: "#fbafba",
@@ -51,8 +42,23 @@ const styles = StyleSheet.create({
     }),
   },
   btnTitle: {
-    color: "red",
+    color: "white",
     fontSize: 18,
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 33,
+  },
+  headerTitle: {
+    fontSize: 30,
+    color: "black",
+  },
+  mainBackground: {
+    alignItems: "center",
+    paddingTop: 30,
+    backgroundColor: "white",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
 });
 export default styles;
