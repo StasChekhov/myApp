@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
   },
   image: {
@@ -21,9 +21,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     textAlign: "left",
     backgroundColor: "#f6f6f6",
+    // marginHorizontal: 40,
   },
+
   form: {
-    width: 340,
+    // width: "100%",
+    // alignItems: "center",
+    // marginHorizontal: 100,
   },
   btn: {
     height: 50,
@@ -32,6 +36,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     justifyContent: "center",
     alignItems: "center",
+
     ...Platform.select({
       ios: {
         backgroundColor: "mediumseagreen",
@@ -43,7 +48,8 @@ const styles = StyleSheet.create({
   },
   btnTitle: {
     color: "white",
-    fontSize: 18,
+    fontSize: 36,
+    fontFamily: "Teko-Regular",
   },
   header: {
     alignItems: "center",
@@ -52,9 +58,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 30,
     color: "black",
+    fontFamily: "Teko-Regular",
   },
   mainBackground: {
     alignItems: "center",
+    opacity: "0.9",
     paddingTop: 30,
     backgroundColor: "white",
     borderTopLeftRadius: 25,
