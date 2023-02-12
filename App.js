@@ -1,108 +1,98 @@
 import * as SplashScreen from "expo-splash-screen";
-import { useCallback, useState, useEffect } from "react";
-import {
-  TextInput,
-  View,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  Platform,
-  KeyboardAvoidingView,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
 
-import { useFonts } from "expo-font";
-import styles from "./styles";
-import image from "./src/background.png";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const initialState = {
-  email: "",
-  password: "",
-};
+import LoginScreen from "./src/Screens/auth/LoginScreen";
+import RegistrationScreen from "./src/Screens/auth/RegistrationScreen";
+import PostsScreen from "./src/Screens/mainScreen/PostsScreen";
+import CreateScreen from "./src/Screens/mainScreen/CreateScreen";
+import ProfileScreen from "./src/Screens/mainScreen/ProfileScreen";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 SplashScreen.preventAutoHideAsync();
 
+const authStack = createNativeStackNavigator();
+const mainTab = createBottomTabNavigator();
+
 export default function App() {
-  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [state, setState] = useState(initialState);
-
-  console.log(isShowKeyboard);
-  const keyboardHide = () => {
-    setIsShowKeyboard(false);
-    Keyboard.dismiss();
-    console.log(state);
-    setState(initialState);
-  };
-
-  const [fontsLoaded] = useFonts({
-    "Teko-Regular": require("./src/fonts/Teko-Regular.ttf"),
-  });
-
-  const loadApplication = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
   return (
-    <View style={styles.container} onLayout={loadApplication}>
-      <TouchableWithoutFeedback onPress={keyboardHide}>
-        <ImageBackground style={styles.image} source={image} resizeMode="cover">
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <View
-              style={{
-                ...styles.mainBackground,
-                height: isShowKeyboard ? 320 : 400,
-              }}
-            >
-              <View style={styles.form}>
-                <View style={styles.header}>
-                  <Text style={styles.headerTitle}> Sign In</Text>
-                </View>
-                <View>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Email"
-                    onFocus={() => setIsShowKeyboard(true)}
-                    value={state.email}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, email: value }))
-                    }
-                  />
-                </View>
-                <View style={{ marginTop: 16 }}>
-                  <TextInput
-                    style={styles.input}
-                    secureTextEntry={true}
-                    placeholder="Password"
-                    onFocus={() => setIsShowKeyboard(true)}
-                    value={state.password}
-                    onChangeText={(value) =>
-                      setState((prevState) => ({
-                        ...prevState,
-                        password: value,
-                      }))
-                    }
-                  />
-                </View>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={styles.btn}
-                  onPress={keyboardHide}
-                >
-                  <Text style={styles.btnTitle}> Sign in</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </KeyboardAvoidingView>
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </View>
+    <NavigationContainer>
+      <mainTab.Navigator
+        initialRouteName="TabsNav"
+        screenOptions={{
+          tabBarStyle: { backgroundColor: "mediumseagreen", opacity: "0.9" },
+
+          tabBarActiveTintColor: "#475B35",
+          tabBarInactiveTintColor: "white",
+          tabBarHideOnKeyboard: false,
+          tabBarLabelStyle: { fontSize: 12 },
+        }}
+      >
+        <mainTab.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+          name="Posts"
+          component={PostsScreen}
+        />
+        <mainTab.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="plus-circle"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+          name="Create"
+          component={CreateScreen}
+        />
+        <mainTab.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="account"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+          name="Profile"
+          component={ProfileScreen}
+        />
+      </mainTab.Navigator>
+    </NavigationContainer>
   );
 }
+
+/* <mainTab.Navigator>
+  <mainTab.Screen name="Posts" component={PostsScreen} />
+  <mainTab.Screen name="Create" component={CreateScreen} />
+  <mainTab.Screen name="Profile" component={ProfileScreen} />
+</mainTab.Navigator>; */
+
+<authStack.Navigator>
+  <authStack.Screen
+    options={{
+      headerShown: false,
+    }}
+    name="Login"
+    component={LoginScreen}
+  />
+  <authStack.Screen
+    options={{
+      headerShown: false,
+    }}
+    name="Register"
+    component={RegistrationScreen}
+  />
+</authStack.Navigator>;
